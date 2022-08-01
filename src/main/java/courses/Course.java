@@ -1,13 +1,9 @@
 package courses;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.apache.commons.lang3.ArrayUtils;
-
 import service.CourseAssignmentService;
-import service.StudentRegistrationService;
 
 public class Course {
   protected String name;
