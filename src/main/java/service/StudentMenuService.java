@@ -37,8 +37,8 @@ public class StudentMenuService {
     } catch(Exception e) {
       // TODO: allow user to re-input age if invalid
         System.out.println("******************************************************************");
-        System.out.println("*      Age cannot be negative.                                   *");
-        System.out.println("*      Returning to menu.                                        *");
+        System.out.println("      " + e.getMessage());
+        System.out.println("      Returning to menu.                                        ");
         System.out.println("******************************************************************");
         return;
     }

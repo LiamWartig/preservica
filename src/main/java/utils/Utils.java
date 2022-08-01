@@ -2,6 +2,7 @@ package utils;
 
 import java.util.Scanner;
 import courses.Course;
+import exception.InvalidAgeException;
 import courses.NewCourseAssignmentVO;
 import registrants.Student;
 import service.CourseRegistrationService;
@@ -75,8 +76,7 @@ public class Utils {
 
     public static void validateAge(final int age) throws Exception{
         if(age<0) {
-          //TODO: custom NegativeAgeException
-           throw new Exception();
+           throw new InvalidAgeException(age);
         } 
     }
 
