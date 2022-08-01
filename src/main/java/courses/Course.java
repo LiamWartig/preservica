@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.ArrayUtils;
-import registrants.RegisteredStudents;
-import service.Utils;
+import service.StudentRegistrationService;
 
 public class Course {
   protected String name;
@@ -13,7 +12,6 @@ public class Course {
   protected int courseId;
   protected int courseAssignmentIds[];
   int nextIndex = 0;
-
   public void push(int e) {
       courseAssignmentIds[nextIndex] = e;
       ++nextIndex;
@@ -55,7 +53,7 @@ this.courseId = courseIdIn;
     if(null != courseAssignmentIds) {
     for (int i = 0; i < courseAssignmentIds.length; i++) {
         int id  = courseAssignmentIds[i];
-        studentIds.addAll(RegisteredStudents.getRegisteredStudents().stream().filter(s -> Utils.contains(s.getAssignedCourseIds(),id)).map(s -> s.getStudentId()).collect(Collectors.toList()));
+        studentIds.addAll(StudentRegistrationService.getRegisteredStudents().stream().filter(s -> ArrayUtils.contains(s.getAssignedCourseIds(),id)).map(s -> s.getStudentId()).collect(Collectors.toList()));
       }
     }
      return studentIds;

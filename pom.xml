@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>UniversityCourseRegistration</groupId>
   <artifactId>UniversityCourseRegistration</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0-SNAPSHOT</version>
   <name>UniversityCourseRegistration</name>
   <build>
  <plugins>
@@ -18,7 +18,7 @@
                     <manifest>
 
                     <!-- give full qualified name of your main class-->
-                      <mainClass>service.RegistrationService</mainClass>
+                      <mainClass>service.App</mainClass>
 
                     </manifest>
                   </archive>

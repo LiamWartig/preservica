@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import registrants.Student;
-import service.Utils;
+import utils.Utils;
 
 public class CourseAssignments {
   
@@ -12,14 +12,16 @@ public class CourseAssignments {
 
   Utils utils = new Utils();
 
-  public static void assignCourse(final NewCourseAssignmentVO newCourseAssignmentVO) {
+  public static void assignCourse(final NewCourseAssignmentVO newCourseAssignmentVO) throws Exception{
     
     CourseAssignment courseAssignment = new CourseAssignment(newCourseAssignmentVO);
     
     courseAssignments.add(courseAssignment);
+    
     Course course = Utils.getCourse(newCourseAssignmentVO.getCourseId());
+    course.addStudentCourseAssignment(courseAssignment.getId());
     Student student = Utils.getStudent(newCourseAssignmentVO.getStudentId());
-
+student.assignCourse(newCourseAssignmentVO.getCourseId());
         
     System.out.println("******************************************************************");    
     System.out.println("*                                                                *");

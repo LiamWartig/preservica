@@ -14,6 +14,10 @@ public class CourseAssignment {
      this.courseAssignmentId=id;
   }
   
+  public int getId() {
+    return this.courseAssignmentId;
+  }
+  
   public void setCourseId(final int courseIdIn) {
     this.courseId=courseIdIn;
   }
