@@ -4,6 +4,9 @@
   <artifactId>UniversityCourseRegistration</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>UniversityCourseRegistration</name>
+  <properties>
+      <java.source.version>1.8</java.source.version>
+  </properties>
   <build>
  <plugins>
      <plugin> 
