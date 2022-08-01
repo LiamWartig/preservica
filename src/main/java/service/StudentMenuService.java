@@ -74,6 +74,7 @@ public class StudentMenuService {
       try {
         Utils.displayStudentInfo(student.getStudentId());
       } catch (Exception e) {
+        // TODO: add student not found exception
         return;
       }
     });
@@ -100,16 +101,29 @@ public class StudentMenuService {
     System.out.println("******************************************************************");
     int newCourseAssignmentCourseId = numScanner.nextInt();
     NewCourseAssignmentVO newCourseAssignmentVO = new NewCourseAssignmentVO(newCourseAssignmentStudentId,newCourseAssignmentCourseId);
-
+boolean isAssignmentValid = false;
     try {
-    Utils.validateCourseAssignment(newCourseAssignmentVO);
+    isAssignmentValid = Utils.validateCourseAssignment(newCourseAssignmentVO);
     } catch (Exception e){
-      //TODO: sysout exception details
+      System.out.println("******************************************************************");
+      System.out.println("      " + e.getMessage());
+      System.out.println("      Returning to menu.                                        ");
+      System.out.println("******************************************************************");
       return;
     }
-    final int courseAssignmentId = courseAssignmentService.assignCourse(newCourseAssignmentVO);
-      final Course course = Utils.getCourse(newCourseAssignmentVO.getCourseId());
-      course.addStudentCourseAssignment(courseAssignmentId);
+    if(isAssignmentValid) {
+          final int courseAssignmentId = courseAssignmentService.assignCourse(newCourseAssignmentVO);
+    final Course course = Utils.getCourse(newCourseAssignmentVO.getCourseId());
+    course.addStudentCourseAssignment(courseAssignmentId);
+    System.out.println("******************************************************************");
+    System.out.println("*                                                                *"); 
+    System.out.println("     Course: " + newCourseAssignmentVO.getCourseId());
+    System.out.println("           successfully assigned to");
+    System.out.println("     Student: " + newCourseAssignmentVO.getStudentId());
+    System.out.println("*                                                                *"); 
+    System.out.println("******************************************************************");
+    }
+
   }
 
 }

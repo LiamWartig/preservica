@@ -2,7 +2,10 @@ package utils;
 
 import java.util.Scanner;
 import courses.Course;
+import exception.CourseFullException;
+import exception.CourseNotFoundException;
 import exception.InvalidAgeException;
+import exception.StudentNotFoundException;
 import courses.NewCourseAssignmentVO;
 import registrants.Student;
 import service.CourseRegistrationService;
@@ -58,22 +61,40 @@ public class Utils {
         System.out.println("*                                                                *");
   }
 
-    public static void validateCourseAssignment(final NewCourseAssignmentVO newCourseAssignmentVO) throws Exception{
-    // TODO: fill in validation logic
-    // TODO: add custom exceptions, i.e. course full, course not found, student not found etc
+    public static boolean validateCourseAssignment(final NewCourseAssignmentVO newCourseAssignmentVO) throws Exception{
+        try {
+            final Course course = Utils.getCourse(newCourseAssignmentVO.getCourseId());
+            Utils.getStudent(newCourseAssignmentVO.getStudentId());
+            if (course.getMaxClassSize() - course.getStudentIds().size() == 0) {
+                throw new CourseFullException(newCourseAssignmentVO.getCourseId(), course.getMaxClassSize());
+            }
+        } catch (Exception e) {
+            System.out.println("******************************************************************");
+            System.out.println("      " + e.getMessage());
+            System.out.println("      Returning to menu.                                        ");
+            System.out.println("******************************************************************");
+        }
+        return true;
     }   
 
 
     public static Student getStudent(final int studentId) throws Exception {
-    // TODO: custom StudentNotFoundExceptions
-        return StudentRegistrationService.getRegisteredStudents().stream().filter(s -> s.getStudentId() == (studentId)).findFirst().orElseThrow(() -> new Exception());
+       try {
+         return StudentRegistrationService.getRegisteredStudents().stream().filter(s -> s.getStudentId() == (studentId)).findFirst().orElseThrow(() -> new StudentNotFoundException(studentId));
+       } catch (Exception e){
+         throw e;
+       }
     }
 
     public static Course getCourse(final int courseId) throws Exception{
-    // TODO: custom CourseNotFoundException
-        return CourseRegistrationService.getRegisteredCourses().stream().filter(c -> c.getCourseId() == (courseId)).findFirst().orElseThrow(() -> new Exception());
+        try { 
+          return CourseRegistrationService.getRegisteredCourses().stream().filter(c -> c.getCourseId() == (courseId)).findFirst().orElseThrow(() -> new CourseNotFoundException(courseId));
+        } catch (Exception e) {
+          throw e;
+        }
     }
-
+    
+    
     public static void validateAge(final int age) throws Exception{
         if(age<0) {
            throw new InvalidAgeException(age);

@@ -5,18 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.ArrayUtils;
+
+import service.CourseAssignmentService;
 import service.StudentRegistrationService;
 
 public class Course {
   protected String name;
   protected int maxClassSize;
   protected int courseId;
-  protected int[] courseAssignmentIds = new int[100];
-  int nextIndex = 0;
-  public void push(int e) {
-      courseAssignmentIds[nextIndex] = e;
-      ++nextIndex;
-  }
+  protected List<Integer> courseAssignmentIds = new ArrayList<>();
+
   public Course(final String nameIn, final int maxClassSizeIn) {
     this.name=nameIn;
     this.maxClassSize=maxClassSizeIn;
@@ -46,16 +44,14 @@ this.courseId = courseIdIn;
   }
   
   public void addStudentCourseAssignment(final int courseAssignmentId) {
-    push(courseAssignmentId);
+    courseAssignmentIds.add(courseAssignmentId);
   }
   
   public List<Integer> getStudentIds(){
     List<Integer> studentIds = new ArrayList<>();
-    if(null != courseAssignmentIds) {
-    for (int i = 0; i < courseAssignmentIds.length; i++) {
-        int id  = courseAssignmentIds[i];
-        studentIds.addAll(StudentRegistrationService.getRegisteredStudents().stream().filter(s -> ArrayUtils.contains(s.getAssignedCourseIds(),id)).map(s -> s.getStudentId()).collect(Collectors.toList()));
-      }
+    if(null != courseAssignmentIds && !courseAssignmentIds.isEmpty()) {
+      List<CourseAssignment> courseAssignments = CourseAssignmentService.getCourseAssignments().stream().filter(ca -> ca.getCourseId() == this.courseId).collect(Collectors.toList());
+        studentIds.addAll(courseAssignments.stream().map(ca -> ca.getStudentId()).collect(Collectors.toList()));
     }
      return studentIds;
   }
