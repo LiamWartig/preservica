@@ -1,5 +1,6 @@
 package courses;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,7 +11,7 @@ public class Course {
   protected String name;
   protected int maxClassSize;
   protected int courseId;
-  protected int courseAssignmentIds[];
+  protected int[] courseAssignmentIds = new int[100];
   int nextIndex = 0;
   public void push(int e) {
       courseAssignmentIds[nextIndex] = e;

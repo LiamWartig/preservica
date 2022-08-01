@@ -2,7 +2,7 @@ package service;
 
 import java.util.Scanner;
 
-import courses.CourseAssignments;
+import courses.Course;
 import courses.NewCourseAssignmentVO;
 import registrants.NewStudentVO;
 import registrants.Student;
@@ -11,6 +11,7 @@ import utils.Utils;
 public class StudentMenuService {
   private final Utils utils = new Utils();
   private final StudentRegistrationService studentRegistrationService = new StudentRegistrationService();
+  private final CourseAssignmentService courseAssignmentService = new CourseAssignmentService();
   
   protected void newStudent(Scanner numScanner, Scanner strScanner) {
     System.out.println("******************************************************************");
@@ -106,8 +107,9 @@ public class StudentMenuService {
       //TODO: sysout exception details
       return;
     }
-    CourseAssignments.assignCourse(newCourseAssignmentVO);
-    
+    final int courseAssignmentId = courseAssignmentService.assignCourse(newCourseAssignmentVO);
+      final Course course = Utils.getCourse(newCourseAssignmentVO.getCourseId());
+      course.addStudentCourseAssignment(courseAssignmentId);
   }
 
 }

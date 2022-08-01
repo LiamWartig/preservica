@@ -105,7 +105,7 @@ public class MenuService {
       System.out.println("*        |_______________|                                       *");
       System.out.println("*                                                                *");
       System.out.println("*         1. New Course                                          *");
-      System.out.println("*         2. List Course                                         *");
+      System.out.println("*         2. List Courses                                        *");
       System.out.println("*         3. Return to Main Menu                                 *");
       System.out.println("*                                                                *");
       System.out.println("******************************************************************");

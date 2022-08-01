@@ -1,5 +1,7 @@
 package courses;
 
+import utils.Utils;
+
 public class CourseAssignment {
   protected int studentId;
   protected int courseId;
@@ -8,11 +10,9 @@ public class CourseAssignment {
   public CourseAssignment(NewCourseAssignmentVO vo) {
     this.courseId=vo.courseId;
     this.studentId=vo.studentId;
+    this.courseAssignmentId = Utils.newCourseAssignmentId();
   }
 
-  public void setId(int id) {
-     this.courseAssignmentId=id;
-  }
   
   public int getId() {
     return this.courseAssignmentId;

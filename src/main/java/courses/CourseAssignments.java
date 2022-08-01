@@ -21,7 +21,7 @@ public class CourseAssignments {
     Course course = Utils.getCourse(newCourseAssignmentVO.getCourseId());
     course.addStudentCourseAssignment(courseAssignment.getId());
     Student student = Utils.getStudent(newCourseAssignmentVO.getStudentId());
-student.assignCourse(newCourseAssignmentVO.getCourseId());
+    student.assignCourse(newCourseAssignmentVO.getCourseId());
         
     System.out.println("******************************************************************");    
     System.out.println("*                                                                *");
