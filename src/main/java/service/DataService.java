@@ -41,7 +41,7 @@ public class DataService {
     String data = "";
     for (int i=1; i==Utils.studentIdCounter; i++) {
       Student student = Utils.getStudent(i);
-      data = data + (student.getName() + "," + student.getAge() + "," + student.getAssignedCourseIds() + "\n");
+      data = data + (student.getName() + "," + student.getAge() + "," + student.getAssignedCourseIds().toString() + "\n");
     
     }
     return data;

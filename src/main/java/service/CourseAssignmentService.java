@@ -7,6 +7,7 @@ import courses.Course;
 import courses.CourseAssignment;
 import courses.NewCourseAssignmentVO;
 import courses.RemoveCourseAssignmentVO;
+import registrants.Student;
 import utils.Utils;
 
 public class CourseAssignmentService {
@@ -17,6 +18,8 @@ public class CourseAssignmentService {
     courseAssignments.add(courseAssignment);
     Course course = Utils.getCourse(newCourseAssignmentVO.getCourseId());
     course.addStudentCourseAssignment(courseAssignment.getId());
+    Student student = Utils.getStudent(newCourseAssignmentVO.getStudentId());
+    student.assignCourse(course.getCourseId());
     return courseAssignment.getId();
   }
   

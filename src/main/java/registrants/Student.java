@@ -1,17 +1,14 @@
 package registrants;
 
+import java.util.ArrayList;
+
 public class Student{
   
 protected String name;
 protected int age;
 protected int studentId;
-public int[] assignedCourseIds;
-int nextIndex = 0;
+public ArrayList<Integer> assignedCourseIds = new ArrayList<Integer>();
 
-public void push(int e) {
-  assignedCourseIds[nextIndex] = e;
-    ++nextIndex;
-}
 public Student(final String nameIn, final int ageIn) {
   this.name=nameIn;
   this.age=ageIn;
@@ -29,7 +26,7 @@ public final void setAge(final int ageIn) {
   this.age=ageIn;
 }
 
-public int[] getAssignedCourseIds(){
+public ArrayList<Integer> getAssignedCourseIds(){
   return this.assignedCourseIds;
 }
 
@@ -41,7 +38,7 @@ public final int getStudentId() {
 }
 
 public void assignCourse(final int courseId) {
-  push(courseId);
+  assignedCourseIds.add(courseId);;
 }
 
 }
