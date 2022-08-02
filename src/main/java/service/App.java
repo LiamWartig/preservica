@@ -3,9 +3,10 @@ package service;
 public class App {
 
   public static void main(String[] args) throws Exception{
+    DataService dataService = new DataService();
     
-    DataService.populateData();
-    
+    String data = dataService.readData();
+    System.out.println(data);
     MenuService menuService = new MenuService();
     
     // display introductory message

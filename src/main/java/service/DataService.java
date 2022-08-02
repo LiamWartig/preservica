@@ -2,15 +2,18 @@ package service;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import org.apache.commons.io.IOUtils;
 
 import registrants.Student;
 import utils.Utils;
 
 public class DataService {
 
-  public static void populateData() {
+  public void populateData() {
     
     
   }
@@ -35,24 +38,23 @@ public class DataService {
     }
   }
   
+   public String readData() throws IOException {
+       FileInputStream dataStream = new FileInputStream("UniversityRegistrationData.csv");
+       return IOUtils.toString(dataStream, "UTF-8");
+   }     
+
   private static void writeStudentData() throws Exception{
     BufferedWriter writer = new BufferedWriter(new FileWriter("UniversityRegistrationData.csv"));
     writer.write("");
     writer.write("studentName,studentAge,assignedCourses");
     writer.newLine();
-    for (int i=1; i<Utils.studentIdCounter+1; i++) {
+    for ( int i = 1 ; i == Utils.studentIdCounter ; i++ ) {
       Student student = Utils.getStudent(i);
       String studentName = student.getName();
       String studentAge = String.valueOf(student.getAge());
       String assignedCourses = student.assignedCourseIds.toString();
-       
-      if (assignedCourses == null) {
-          assignedCourses = "[]";   // write empty value for null
-      }
-      
       String line = String.format("%s,%s,%s",
-              studentName, studentAge, assignedCourses);
-       
+              studentName, studentAge, assignedCourses);       
       writer.write(line);
       writer.newLine();
     }
