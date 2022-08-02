@@ -1,10 +1,17 @@
 package validation;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import courses.Course;
+import courses.CourseAssignment;
 import courses.NewCourseAssignmentVO;
 import exception.CourseFullException;
 import exception.CourseNotFoundException;
+import exception.DuplicateCourseAssignmentException;
 import exception.StudentNotFoundException;
+import service.CourseAssignmentService;
 import utils.Utils;
 
 public class AssignmentValidation {
@@ -12,6 +19,7 @@ public class AssignmentValidation {
     try {
         checkStudentExists(newCourseAssignmentVO.getStudentId());
         checkCourseExists(newCourseAssignmentVO.getCourseId());
+        checkCourseNotAlreadyAssignedToStudent(newCourseAssignmentVO);
         checkClassNotFull(newCourseAssignmentVO.getCourseId());
     } catch (Exception e) {
         System.out.println("******************************************************************");
@@ -30,6 +38,15 @@ public class AssignmentValidation {
       CourseNotFoundException ex = new CourseNotFoundException(courseId);
       throw ex;
     }
+  }
+  
+  private static void checkCourseNotAlreadyAssignedToStudent(final NewCourseAssignmentVO vo) throws Exception {
+      List<Integer> coursesAssignedToStudent = CourseAssignmentService.getCourseAssignments().stream().filter(ca -> ca.getStudentId() == vo.getStudentId()).map(ca -> ca.getCourseId()).collect(Collectors.toList());
+//      List<Integer> courseIds = coursesAssignedToStudent.stream().map(ca -> ca.getCourseId()).collect(Collectors.toList());
+      if (coursesAssignedToStudent.contains(vo.getCourseId())) {
+      DuplicateCourseAssignmentException ex = new DuplicateCourseAssignmentException(vo);
+      throw ex;
+      }
   }
   
   private static void checkStudentExists(final int studentId) throws Exception {
