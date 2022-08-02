@@ -7,7 +7,6 @@ import courses.NewCourseVO;
 import utils.Utils;
 
 public class CourseMenuService {
-  private final Utils utils = new Utils();
   private final CourseRegistrationService courseRegistrationService = new CourseRegistrationService();
 
   protected void newCourse(Scanner numScanner, Scanner strScanner) {
@@ -39,7 +38,7 @@ public class CourseMenuService {
     System.out.println("*                                                                *"); 
     System.out.println("******************************************************************");
 
-    final boolean confirmation = utils.confirmInput(strScanner);
+    final boolean confirmation = Utils.confirmInput(strScanner);
       
     if(confirmation) {
     final Course course = new Course(newCourseVO.getName(), newCourseVO.getMaxClassSize());

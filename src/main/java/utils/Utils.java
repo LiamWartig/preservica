@@ -2,11 +2,8 @@ package utils;
 
 import java.util.Scanner;
 import courses.Course;
-import exception.CourseFullException;
 import exception.CourseNotFoundException;
-import exception.InvalidAgeException;
 import exception.StudentNotFoundException;
-import courses.NewCourseAssignmentVO;
 import registrants.Student;
 import service.CourseRegistrationService;
 import service.StudentRegistrationService;
@@ -32,7 +29,7 @@ public class Utils {
         return studentIdCounter;
     }
 
-    public boolean confirmInput(Scanner scanner) {
+    public static boolean confirmInput(Scanner scanner) {
         System.out.println("******************************************************************");
         System.out.println("*                                                                *"); 
         System.out.println("*     Are these details correct? (y/n)                           *");
@@ -61,23 +58,6 @@ public class Utils {
         System.out.println("*                                                                *");
   }
 
-    public static boolean validateCourseAssignment(final NewCourseAssignmentVO newCourseAssignmentVO) throws Exception{
-        try {
-            final Course course = Utils.getCourse(newCourseAssignmentVO.getCourseId());
-            Utils.getStudent(newCourseAssignmentVO.getStudentId());
-            if (course.getMaxClassSize() - course.getStudentIds().size() == 0) {
-                throw new CourseFullException(newCourseAssignmentVO.getCourseId(), course.getMaxClassSize());
-            }
-        } catch (Exception e) {
-            System.out.println("******************************************************************");
-            System.out.println("      " + e.getMessage());
-            System.out.println("      Returning to menu.                                        ");
-            System.out.println("******************************************************************");
-        }
-        return true;
-    }   
-
-
     public static Student getStudent(final int studentId) throws Exception {
        try {
          return StudentRegistrationService.getRegisteredStudents().stream().filter(s -> s.getStudentId() == (studentId)).findFirst().orElseThrow(() -> new StudentNotFoundException(studentId));
@@ -94,11 +74,4 @@ public class Utils {
         }
     }
     
-    
-    public static void validateAge(final int age) throws Exception{
-        if(age<0) {
-           throw new InvalidAgeException(age);
-        } 
-    }
-
 }

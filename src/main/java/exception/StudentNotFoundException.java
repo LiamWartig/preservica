@@ -9,7 +9,7 @@ public class StudentNotFoundException extends RuntimeException {
   
   public StudentNotFoundException(final int studentIdIn) {
     this.studentId = studentIdIn;
-    this.message = "No course found with ID: " + studentIdIn;
+    this.message = "No student found with ID: " + studentIdIn;
   }
 
   public int getStudentId() {

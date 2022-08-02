@@ -7,9 +7,10 @@ import courses.NewCourseAssignmentVO;
 import registrants.NewStudentVO;
 import registrants.Student;
 import utils.Utils;
+import validation.AssignmentValidation;
+import validation.StudentValidation;
 
 public class StudentMenuService {
-  private final Utils utils = new Utils();
   private final StudentRegistrationService studentRegistrationService = new StudentRegistrationService();
   private final CourseAssignmentService courseAssignmentService = new CourseAssignmentService();
   
@@ -33,7 +34,7 @@ public class StudentMenuService {
     int newStudentAge = numScanner.nextInt();
     // validate age of student
     try {
-        Utils.validateAge(newStudentAge);
+        StudentValidation.validateAge(newStudentAge);
     } catch(Exception e) {
       // TODO: allow user to re-input age if invalid
         System.out.println("******************************************************************");
@@ -52,7 +53,7 @@ public class StudentMenuService {
     System.out.println("*                                                                *"); 
     System.out.println("******************************************************************");
     
-    final boolean confirmation = utils.confirmInput(strScanner);
+    final boolean confirmation = Utils.confirmInput(strScanner);
     
     if(confirmation) {
         final Student student = new Student(newStudentVO.getName(), newStudentVO.getAge());
@@ -100,28 +101,32 @@ public class StudentMenuService {
     System.out.println("*                                                                *"); 
     System.out.println("******************************************************************");
     int newCourseAssignmentCourseId = numScanner.nextInt();
+    
     NewCourseAssignmentVO newCourseAssignmentVO = new NewCourseAssignmentVO(newCourseAssignmentStudentId,newCourseAssignmentCourseId);
-boolean isAssignmentValid = false;
-    try {
-    isAssignmentValid = Utils.validateCourseAssignment(newCourseAssignmentVO);
-    } catch (Exception e){
-      System.out.println("******************************************************************");
-      System.out.println("      " + e.getMessage());
-      System.out.println("      Returning to menu.                                        ");
-      System.out.println("******************************************************************");
-      return;
-    }
+    
+    System.out.println("******************************************************************");    
+    System.out.println("*                                                                *");
+    System.out.println("      You are assigning Student with ID: " + newCourseAssignmentVO.getStudentId());
+    System.out.println("                                                                "); 
+    System.out.println("           to Course with ID: " + newCourseAssignmentVO.getCourseId());
+    System.out.println("*                                                                *"); 
+    System.out.println("******************************************************************");
+    
+    Utils.confirmInput(strScanner);
+     
+    final boolean isAssignmentValid = AssignmentValidation.validateCourseAssignment(newCourseAssignmentVO);
+
     if(isAssignmentValid) {
-          final int courseAssignmentId = courseAssignmentService.assignCourse(newCourseAssignmentVO);
-    final Course course = Utils.getCourse(newCourseAssignmentVO.getCourseId());
-    course.addStudentCourseAssignment(courseAssignmentId);
-    System.out.println("******************************************************************");
-    System.out.println("*                                                                *"); 
-    System.out.println("     Course: " + newCourseAssignmentVO.getCourseId());
-    System.out.println("           successfully assigned to");
-    System.out.println("     Student: " + newCourseAssignmentVO.getStudentId());
-    System.out.println("*                                                                *"); 
-    System.out.println("******************************************************************");
+      final int courseAssignmentId = courseAssignmentService.assignCourse(newCourseAssignmentVO);
+      final Course course = Utils.getCourse(newCourseAssignmentVO.getCourseId());
+      course.addStudentCourseAssignment(courseAssignmentId);
+      System.out.println("******************************************************************");
+      System.out.println("*                                                                *"); 
+      System.out.println("     Course: " + newCourseAssignmentVO.getCourseId());
+      System.out.println("           successfully assigned to");
+      System.out.println("     Student: " + newCourseAssignmentVO.getStudentId());
+      System.out.println("*                                                                *"); 
+      System.out.println("******************************************************************");
     }
 
   }
