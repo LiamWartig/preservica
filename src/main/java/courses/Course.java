@@ -43,6 +43,10 @@ this.courseId = courseIdIn;
     courseAssignmentIds.add(courseAssignmentId);
   }
   
+  public void removeStudentCourseAssignment(final int courseAssignmentId) {
+    courseAssignmentIds.remove(courseAssignmentIds.indexOf(courseAssignmentId));
+  }
+  
   public List<Integer> getStudentIds(){
     List<Integer> studentIds = new ArrayList<>();
     if(null != courseAssignmentIds && !courseAssignmentIds.isEmpty()) {

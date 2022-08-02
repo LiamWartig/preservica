@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import courses.Course;
 import courses.NewCourseAssignmentVO;
+import courses.RemoveCourseAssignmentVO;
 import registrants.NewStudentVO;
 import registrants.Student;
 import utils.Utils;
@@ -32,7 +33,6 @@ public class StudentMenuService {
     System.out.println("*                                                                *"); 
     System.out.println("******************************************************************");
     int newStudentAge = numScanner.nextInt();
-    // validate age of student
     try {
         StudentValidation.validateAge(newStudentAge);
     } catch(Exception e) {
@@ -114,7 +114,7 @@ public class StudentMenuService {
     
     Utils.confirmInput(strScanner);
      
-    final boolean isAssignmentValid = AssignmentValidation.validateCourseAssignment(newCourseAssignmentVO);
+    final boolean isAssignmentValid = AssignmentValidation.validateNewCourseAssignment(newCourseAssignmentVO);
 
     if(isAssignmentValid) {
       final int courseAssignmentId = courseAssignmentService.assignCourse(newCourseAssignmentVO);
@@ -131,4 +131,49 @@ public class StudentMenuService {
 
   }
 
+  protected void removeCourse(Scanner numScanner, Scanner strScanner) throws Exception{
+    System.out.println("******************************************************************");
+    System.out.println("*                                                                *");
+    System.out.println("*     Removing Course Assignment from Student                    *");
+    System.out.println("*                                                                *");
+    System.out.println("******************************************************************");  
+    System.out.println("******************************************************************");    
+    System.out.println("*                                                                *");
+    System.out.println("*     Enter Student ID:                                         *");
+    System.out.println("*                                                                *"); 
+    System.out.println("******************************************************************");    
+    int removeCourseAssignmentStudentId = numScanner.nextInt();
+    System.out.println("******************************************************************");
+    System.out.println("*                                                                *");
+    System.out.println("*     Enter Course ID:                                           *");
+    System.out.println("*                                                                *"); 
+    System.out.println("******************************************************************");
+    int removeCourseAssignmentCourseId = numScanner.nextInt();
+    
+    RemoveCourseAssignmentVO removeCourseAssignmentVO = new RemoveCourseAssignmentVO(removeCourseAssignmentStudentId,removeCourseAssignmentCourseId);
+    
+    System.out.println("******************************************************************");    
+    System.out.println("*                                                                *");
+    System.out.println("      You are removing Student with ID: " + removeCourseAssignmentVO.getStudentId());
+    System.out.println("                                                                "); 
+    System.out.println("    from their assignment to Course with ID: " + removeCourseAssignmentVO.getCourseId());
+    System.out.println("*                                                                *"); 
+    System.out.println("******************************************************************");
+    
+    Utils.confirmInput(strScanner);
+     
+    final boolean isAssignmentValid = AssignmentValidation.validateRemoveCourseAssignment(removeCourseAssignmentVO);
+
+    if(isAssignmentValid) {
+      courseAssignmentService.removeCourse(removeCourseAssignmentVO);
+      System.out.println("******************************************************************");
+      System.out.println("*                                                                *"); 
+      System.out.println("     Student: " + removeCourseAssignmentVO.getStudentId());
+      System.out.println("           successfully un-assigned from");
+      System.out.println("     Course: " + removeCourseAssignmentVO.getCourseId());
+      System.out.println("*                                                                *"); 
+      System.out.println("******************************************************************");
+    }
+
+  }
 }

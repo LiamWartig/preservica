@@ -31,7 +31,7 @@ public class MenuService {
     System.out.println("*        |_______________|                                       *");
     System.out.println("*                                                                *");
     System.out.println("*         1. Students                                            *");
-    System.out.println("*         2. Teachers                                             *");
+    System.out.println("*         2. Teachers                                            *");
     System.out.println("*         3. Courses                                             *");
     System.out.println("*         4. Exit                                                *");
     System.out.println("*                                                                *");
@@ -91,7 +91,11 @@ public class MenuService {
         studentsMenu(); 
         break;
       }
-      //      case 4: removeCourse();
+      case 4: {
+        studentMenuService.removeCourse(numScanner,strScanner);
+        studentsMenu();
+        break;
+      }
       default: mainMenu();
       }  
   }

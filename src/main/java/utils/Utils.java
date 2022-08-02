@@ -2,9 +2,12 @@ package utils;
 
 import java.util.Scanner;
 import courses.Course;
+import courses.CourseAssignment;
+import exception.CourseAssignmentNotFoundException;
 import exception.CourseNotFoundException;
 import exception.StudentNotFoundException;
 import registrants.Student;
+import service.CourseAssignmentService;
 import service.CourseRegistrationService;
 import service.StudentRegistrationService;
 
@@ -73,5 +76,23 @@ public class Utils {
           throw e;
         }
     }
+    
+    public static CourseAssignment getCourseAssignment(final int courseId, final int studentId) {
+      try{ CourseAssignment courseAssignment = CourseAssignmentService.getCourseAssignments().stream().filter(ca -> 
+      ((ca.getCourseId() == courseId) && ca.getStudentId() == studentId)).findFirst().get();
+      return courseAssignment;
+      } catch (Exception e) {
+        CourseAssignmentNotFoundException ex = new CourseAssignmentNotFoundException(courseId, studentId);
+        throw ex;
+      }
+    }
+    
+    public static void displayErrorMessage(final Exception e) {
+      System.out.println("******************************************************************");
+      System.out.println("      " + e.getMessage());
+      System.out.println("      Returning to menu.                                        ");
+      System.out.println("******************************************************************");
+    }
+
     
 }
