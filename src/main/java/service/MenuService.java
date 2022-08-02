@@ -47,6 +47,7 @@ public class MenuService {
         break;
       }
       case 4: {
+        DataService.saveData();
         System.out.println("******************************************************************");
         System.out.println("*                                                                *");
         System.out.println("*     Exiting Program.                                           *");

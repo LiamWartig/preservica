@@ -8,5 +8,4 @@ public class StudentValidation {
        throw new InvalidAgeException(age);
     } 
 }
-
 }

@@ -13,9 +13,9 @@ import service.StudentRegistrationService;
 
 public class Utils {
 
-    private static int studentIdCounter = 0;
-    private static int courseIdCounter = 0;
-    private static int courseAssignmentIdCounter = 0;
+    public static int studentIdCounter = 0;
+    public static int courseIdCounter = 0;
+    public static int courseAssignmentIdCounter = 0;
 
     public static int newCourseAssignmentId() {
         courseAssignmentIdCounter++;
